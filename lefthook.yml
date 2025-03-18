@@ -8,6 +8,8 @@ pre-commit:
       run: npx -y prettier --write {staged_files}
       stage_fixed: true
     github-workflow:
+      env:
+        PATH: ./bin:$PATH
       glob: ".github/workflows/*.{yml,yaml}"
       run: make pinact && pinact run {staged_files}
       stage_fixed: true
