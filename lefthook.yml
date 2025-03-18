@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  commands:
+    prettier-format:
+      env:
+        PATH: ./node_modules/.bin:$PATH
+      glob: "*.{js,jsx,ts,tsx}"
+      run: npx -y prettier --write {staged_files}
+      stage_fixed: true

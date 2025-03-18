@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -euo pipefail
+
+projectRoot=$(git rev-parse --show-toplevel)
+LEFTHOOK_BIN="${projectRoot}/bin/lefthook"
+if test -n "$LEFTHOOK_BIN"
+then
+  exec "$LEFTHOOK_BIN" run "pre-commit" --no-auto-install "$@"
+else
+  echo "LEFTHOOK_BIN is not installed."
+  echo "Please run 'make setup' to install it."
+  exit 1
+fi
+
+exit 0
