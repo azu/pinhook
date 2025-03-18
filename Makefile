@@ -1,3 +1,5 @@
+OS   := $(shell uname | awk '{print tolower($$0)}')
+ARCH := $(shell case $$(uname -m) in (x86_64) echo amd64 ;; (aarch64) echo arm64 ;; (*) echo $$(uname -m) ;; esac)
 BIN_DIR      := ./bin
 
 LEFTHOOK_VERSION           := 1.6.11
@@ -18,6 +20,7 @@ $(LEFTHOOK):
 .PHONY: pinact
 pinact: $(PINACT)
 $(PINACT):
-	@curl -sSL "https://github.com/suzuki-shunsuke/pinact/releases/download/v$(PINACT_VERSION)/pinact_$(shell uname -s | sed 's/Darwin/MacOS/g')_$(shell uname -m)" -o $(PINACT) && chmod +x $(PINACT)
-	@cp $(PINACT) $(BIN_DIR)/pinact
+	@curl -sSL "https://github.com/suzuki-shunsuke/pinact/releases/download/v$(PINACT_VERSION)/pinact_$(OS)_$(ARCH).tar.gz" | tar -C $(BIN_DIR) -xzv pinact
+	@mv $(BIN_DIR)/pinact $(PINACT)
+	@ln -s -f $(notdir $(PINACT)) $(BIN_DIR)/pinact
 
