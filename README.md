@@ -1,28 +1,37 @@
-# Fixed in https://github.com/evilmartians/lefthook/releases/tag/v1.6.11
+# pinhook
 
-This behavior is fixed in https://github.com/evilmartians/lefthook/releases/tag/v1.6.11
+This repository is a sample demonstrating the combination of [pinact](https://github.com/suzuki-shunsuke/pinact) and [lefthook](https://github.com/evilmartians/lefthook).
 
-- https://github.com/evilmartians/lefthook/discussions/715#discussioncomment-9415756
+## Overview
 
-## Lefthook modify .githooks
+- **pinact**: A CLI tool to edit GitHub Workflow and Composite action files and pin versions of Actions and Reusable Workflows
+- **lefthook**: Fast and powerful Git hooks manager for any type of projects
+
+This repository shows how to automatically pin action versions in GitHub Workflow files during commits using Git pre-commit hooks.
+
+## Setup
+
+```bash
+git clone https://github.com/azu/pinhook
+cd pinhook
+make setup
+```
+
+This will install the necessary dependencies and set up the Git hooks.
 
 ## Usage
 
-    git clone https://github.com/azu/make-lefthook
-    make setup
-    
-    touch index.js
-    git add .
-    git commit -m "Add index.js"
-    
-    # lefthook modify .githooks/pre-commit file
-    git status
-    On branch main
-    Your branch is ahead of 'origin/main' by 1 commit.
-    (use "git push" to publish your local commits)
+When you modify `.github/workflows/*.yml` files and commit them, lefthook's pre-commit hook will trigger and pinact will automatically pin the action versions.
 
-    Changes not staged for commit:
-    (use "git add <file>..." to update what will be committed)
-    (use "git restore <file>..." to discard changes in working directory)
-        modified:   .githooks/pre-commit
-        modified:   .githooks/prepare-commit-msg
+```bash
+# Modify files in .github/workflows directory
+git add .github/workflows/some-workflow.yml
+git commit -m "Update workflow"
+
+# pinact will automatically pin action versions
+```
+
+## Configuration Files
+
+- `lefthook.yml`: Git hooks configuration
+- `Makefile`: Installation and setup for pinact and lefthook
